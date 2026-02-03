@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # DuDo - Task Management Website
 
 A simple Django-based task management application with user authentication, task categorization, and MySQL database support.
@@ -137,7 +136,56 @@ DuDo/
 1. **MySQL Connection Error**: Ensure MySQL server is running and credentials are correct
 2. **Migration Issues**: Delete `db.sqlite3` and `dudo_app/migrations/` then re-run migrations
 3. **Static Files**: Run `python manage.py collectstatic` for production deployment
-=======
-# DoDu
-my first DoDu website
->>>>>>> 748e38f2f3950538aec1e06e82cee7d7ea253bb0
+
+## PythonAnywhere Deployment
+
+To deploy this application on PythonAnywhere:
+
+1. Create an account at https://www.pythonanywhere.com/
+2. Create a new web app using manual configuration with Python 3.13
+3. Clone your repository or upload the files to your home directory
+4. Install dependencies using the bash console:
+   ```bash
+   pip3.13 install -r requirements.txt
+   ```
+5. Update the settings.py file to include your PythonAnywhere domain in ALLOWED_HOSTS
+6. Run migrations:
+   ```bash
+   python3.13 manage.py migrate
+   ```
+7. Collect static files:
+   ```bash
+   python3.13 manage.py collectstatic
+   ```
+8. Reload the web app from the PythonAnywhere dashboard
+
+### Required Changes for PythonAnywhere
+
+1. In `dudo_project/settings.py`, add your PythonAnywhere domain to ALLOWED_HOSTS:
+   ```python
+   ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
+   ```
+
+2. Update the database configuration if using the default SQLite:
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.sqlite3',
+           'NAME': '/home/yourusername/dudo_project/db.sqlite3',  # Full path required
+       }
+   }
+   ```
+
+3. Make sure to run collectstatic to serve static files properly:
+   ```bash
+   python3.13 manage.py collectstatic
+   ```
+
+### Complete Deployment Process
+
+For a complete step-by-step deployment guide, please see the [PYTHONANYWHERE_DEPLOYMENT_CHECKLIST.md](PYTHONANYWHERE_DEPLOYMENT_CHECKLIST.md) file included in this project.
+
+Additional helpful files included:
+- `deploy_pythonanywhere.sh` - Automated deployment script
+- `wsgi_pythonanywhere.py` - WSGI configuration file
+- `requirements_full.txt` - Complete list of dependencies
