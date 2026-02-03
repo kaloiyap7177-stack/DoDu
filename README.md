@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DuDo - Task Management Website
 
 A simple Django-based task management application with user authentication, task categorization, and MySQL database support.
@@ -136,3 +137,7 @@ DuDo/
 1. **MySQL Connection Error**: Ensure MySQL server is running and credentials are correct
 2. **Migration Issues**: Delete `db.sqlite3` and `dudo_app/migrations/` then re-run migrations
 3. **Static Files**: Run `python manage.py collectstatic` for production deployment
+=======
+# DoDu
+my first DoDu website
+>>>>>>> 748e38f2f3950538aec1e06e82cee7d7ea253bb0
