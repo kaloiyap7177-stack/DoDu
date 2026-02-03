@@ -1,0 +1,89 @@
+{% extends 'dudo_app/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-primary">
+                <i class="fas fa-tasks me-3"></i>DuDo
+            </h1>
+            <p class="lead text-muted">Your Simple Task Management Solution</p>
+            <p class="text-muted">Organize your tasks, categorize them, and boost your productivity</p>
+        </div>
+
+        {% if user.is_authenticated %}
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-list-check fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Manage Tasks</h5>
+                        <p class="card-text">Create, update, and organize your daily tasks efficiently.</p>
+                        <a href="{% url 'task_list' %}" class="btn btn-primary">View Tasks</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-plus-circle fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Add New Task</h5>
+                        <p class="card-text">Quickly add new tasks with descriptions and categories.</p>
+                        <a href="{% url 'create_task' %}" class="btn btn-success">Create Task</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-tags fa-3x text-info mb-3"></i>
+                        <h5 class="card-title">Categories</h5>
+                        <p class="card-text">Organize tasks with custom categories and colors.</p>
+                        <a href="{% url 'category_list' %}" class="btn btn-info">Manage Categories</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card shadow">
+            <div class="card-body text-center p-5">
+                <i class="fas fa-user-lock fa-4x text-muted mb-4"></i>
+                <h3 class="mb-3">Welcome to DuDo</h3>
+                <p class="lead mb-4">Please log in to start managing your tasks</p>
+                <a href="{% url 'admin:login' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login to Get Started
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Features</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Task creation and management</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Category organization</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Task completion tracking</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Filter by categories</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>User authentication</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Responsive design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

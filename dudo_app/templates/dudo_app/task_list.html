@@ -1,0 +1,115 @@
+{% extends 'dudo_app/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-tasks me-2"></i>My Tasks</h2>
+    <a href="{% url 'create_task' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-1"></i>New Task
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-lg-3 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Filters</h6>
+            </div>
+            <div class="card-body">
+                <h6 class="mb-3">Categories</h6>
+                <div class="list-group list-group-flush mb-3">
+                    <a href="{% url 'task_list' %}" class="list-group-item list-group-item-action {% if not request.GET.category %}active{% endif %}">
+                        All Tasks
+                    </a>
+                    {% for category in categories %}
+                    <a href="?category={{ category.id }}" class="list-group-item list-group-item-action {% if request.GET.category == category.id|stringformat:'s' %}active{% endif %}">
+                        <span class="category-tag" style="background-color: {{ category.color }}; color: white;">
+                            {{ category.name }}
+                        </span>
+                    </a>
+                    {% endfor %}
+                </div>
+                
+                <h6 class="mb-3">Status</h6>
+                <div class="list-group list-group-flush">
+                    <a href="?completed=false" class="list-group-item list-group-item-action {% if request.GET.completed == 'false' %}active{% endif %}">
+                        <i class="fas fa-circle text-warning me-2"></i>Pending
+                    </a>
+                    <a href="?completed=true" class="list-group-item list-group-item-action {% if request.GET.completed == 'true' %}active{% endif %}">
+                        <i class="fas fa-check-circle text-success me-2"></i>Completed
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-9">
+        {% if tasks %}
+        <div class="row g-3">
+            {% for task in tasks %}
+            <div class="col-md-6">
+                <div class="card task-card h-100 {% if task.completed %}completed-task{% endif %}">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">
+                                {% if task.completed %}
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                {% else %}
+                                <i class="fas fa-circle text-warning me-2"></i>
+                                {% endif %}
+                                {{ task.title }}
+                            </h5>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'task_detail' task.id %}"><i class="fas fa-eye me-2"></i>View</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'update_task' task.id %}"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="{% url 'delete_task' task.id %}"><i class="fas fa-trash me-2"></i>Delete</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        {% if task.description %}
+                        <p class="card-text text-muted">{{ task.description|truncatewords:20 }}</p>
+                        {% endif %}
+                        
+                        <div class="mb-3">
+                            {% for tc in task.taskcategory_set.all %}
+                            <span class="category-tag me-1" style="background-color: {{ tc.category.color }}; color: white;">
+                                {{ tc.category.name }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>Created {{ task.created_at|date:"M d, Y" }}
+                            </small>
+                            <div>
+                                {% if task.completed %}
+                                <span class="badge bg-success">Completed</span>
+                                {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-tasks fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">No tasks found</h4>
+            <p class="text-muted">Create your first task to get started!</p>
+            <a href="{% url 'create_task' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i>Create Task
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
